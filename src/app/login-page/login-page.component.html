@@ -1,1 +1,18 @@
-<p>login-page works!</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <p-panel header="Login">
+        <p-floatlabel variant="on">
+            <input pInputText id="email" type="email" autocomplete="off" formControlName="email" />
+            <label for="email">Email</label>
+        </p-floatlabel>
+        <p-message severity="error" size="small" variant="simple">
+            @if (isInvalid('email')) {
+                Email is Required.
+            }
+        </p-message>
+        <p-floatlabel variant="on">
+            <input pInputText id="password" type="password" autocomplete="off" formControlName="password" />
+            <label for="password">Password</label>
+        </p-floatlabel>
+        <p-button label="Login" type="submit" size="small" [disabled]="loginForm.invalid"/>
+    </p-panel>
+</form>
