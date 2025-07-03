@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { UserListPageComponent } from './user-list-page/user-list-page.component';
+import { UserListPageComponent } from './pages/protected-pages/user-list-page/user-list-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { ProtectedPagesComponent } from './pages/protected-pages/protected-pages.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,12 +11,9 @@ export const routes: Routes = [
     component: LoginPageComponent,
   },
   {
-    path: 'register',
-    component: RegisterPageComponent,
-  },
-  {
     path: '',
     component: ProtectedPagesComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',

@@ -12,8 +12,3 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
-
-export type LoginResponse = {
-    user: User;
-    access_token: string;
-}

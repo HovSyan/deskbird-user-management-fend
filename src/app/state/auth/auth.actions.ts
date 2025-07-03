@@ -1,21 +1,23 @@
 import { createAction, props } from '@ngrx/store';
-import { Credentials, LoginResponse } from '../../services/user';
-import { AxiosError } from 'axios';
+import { Credentials, User } from '../../services/user';
 import { CustomError } from '../../utils/custom-error';
 
 export const loginAction = createAction(
-  '[Login Page] Login',
-  props<Credentials>()
+    '[Login Page] Login',
+    props<Credentials>()
 );
 
 export const loginSuccessAction = createAction(
-  '[API] Login Success',
-  props<LoginResponse>()
+    '[API] Login Success',
+    props<User>()
 );
 
 export const loginErrorAction = createAction(
-  '[API] Login Error',
-  props<CustomError>()
+    '[API] Login Error',
+    props<CustomError>()
 );
 
-export const logoutAction = createAction('[Protected Page] Logout');
+export const userLoadAction = createAction(
+    '[API] user load',
+    props<User>()
+);
