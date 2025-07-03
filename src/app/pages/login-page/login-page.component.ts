@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -15,10 +15,10 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { FluidModule } from 'primeng/fluid';
-import { ApiService } from '../../services/api/api.service';
-import { Router } from '@angular/router';
-import { NgTemplateOutlet } from '@angular/common';
-import { UserService } from '../../services/user/user.service';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { loginAction } from '../../state/auth/auth.actions';
+import { loginLoadingSelector } from '../../state/auth/auth.selectors';
 
 @Component({
   selector: 'app-login-page',
@@ -31,30 +31,31 @@ import { UserService } from '../../services/user/user.service';
     ButtonModule,
     PasswordModule,
     MessageModule,
-    ToastModule,
     FluidModule,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
+  private _store = inject(Store);
+
   loginForm = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
+      updateOn: 'blur',
       nonNullable: true,
     }),
     password: new FormControl('', {
       validators: Validators.required,
+      updateOn: 'blur',
       nonNullable: true,
     }),
   });
-  isSubmitting = false;
-
-  private _userService = inject(UserService);
-  private _messages = inject(MessageService);
-  private _router = inject(Router);
+  isSubmitting$ = this._store.select(loginLoadingSelector);
 
   isInvalid(controlName: keyof typeof this.loginForm.controls) {
     const control = this.loginForm.get(controlName)!;
@@ -64,20 +65,7 @@ export class LoginPageComponent {
   async onSubmit() {
     this._markAllAsDirty();
     if (this.loginForm.invalid) return;
-
-    try {
-      this.isSubmitting = true;
-      await this._userService.login(this.loginForm.getRawValue());
-      await this._router.navigate(['users']);
-    } catch (e) {
-      this._messages.add({
-        summary: 'Error',
-        detail: 'Something went wrong',
-        severity: 'error',
-      });
-    } finally {
-        this.isSubmitting = false;
-    }
+    this._store.dispatch(loginAction(this.loginForm.getRawValue()))
   }
 
   private _markAllAsDirty() {

@@ -1,10 +1,21 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  provideAppInitializer,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
+import { provideEffects } from '@ngrx/effects';
 import { provideRouter } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
+import { provideStore } from '@ngrx/store';
+import { authReducer } from './state/auth/auth.reducers';
+import { AuthEffects } from './state/auth/auth.effects';
+import { ApiService } from './services/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,10 +26,13 @@ export const appConfig: ApplicationConfig = {
       ripple: true,
       theme: {
         options: {
-            darkModeSelector: 'no',
+          darkModeSelector: 'no',
         },
         preset: Aura,
       },
     }),
+    provideAppInitializer(() => inject(ApiService).healthCheck()),
+    provideEffects([AuthEffects]),
+    provideStore({ auth: authReducer }),
   ],
 };

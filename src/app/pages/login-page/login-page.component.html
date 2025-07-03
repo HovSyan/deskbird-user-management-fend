@@ -26,7 +26,7 @@
             }
         }
       </p-iftalabel>
-      <p-button [loading]="isSubmitting" size="large" label="Sign in" fluid="true" type="submit"></p-button>
+      <p-button [loading]="isSubmitting$ | async" size="large" label="Sign in" fluid="true" type="submit"></p-button>
     </p-fluid>
   </form>
 </div>
@@ -34,5 +34,3 @@
 <ng-template #required let-msg="msg">
     <p-message severity="error" variant="simple">This field is required</p-message>
 </ng-template>
-
-<p-toast position="bottom-right"></p-toast>

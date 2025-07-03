@@ -7,6 +7,7 @@ import env from '../../../env';
 })
 export class ApiService {
     static AUTH = '/api/v1/auth';
+    static HEALTH_CHECK = '/healthz'
 
     private _api = axios.create({
         baseURL: env.api_url,
@@ -17,6 +18,6 @@ export class ApiService {
     }
 
     healthCheck() {
-        // TODO
+        this._api.get<void>(ApiService.HEALTH_CHECK)
     }
 }

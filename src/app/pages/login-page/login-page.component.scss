@@ -9,32 +9,27 @@
 
 .illustration {
   display: flex;
-  padding: 10rem;
+  padding: 100px;
 }
 
 .login-form {
-  margin-top: -20rem;
-  max-width: 40rem;
+  margin-top: -200px;
+  max-width: 400px;
   width: 100%;
 
   form {
     display: contents;
-
-    --p-form-field-lg-font-size: 2rem;
-    --p-iftalabel-font-size: 1.5rem;
-    --p-iftalabel-input-padding-top: 2.5rem;
-    --p-inputtext-lg-font-size: var(--p-form-field-lg-font-size);
-    --p-button-lg-font-size: 1.5rem;
-    --p-button-lg-padding-y: 1.6rem;
-    --p-message-simple-content-padding: .5rem
   }
 
   p-fluid {
     display: flex;
-    gap: 2.4rem;
+    gap: 24px;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+
+    --p-message-text-font-size: .8rem;
+    --p-message-simple-content-padding: .3rem .5rem;
   }
 }
 
