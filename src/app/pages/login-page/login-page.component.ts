@@ -8,14 +8,17 @@ import {
 } from '@angular/forms';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { FluidModule } from 'primeng/fluid';
 import { ApiService } from '../../services/api/api.service';
 import { Router } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -24,11 +27,13 @@ import { Router } from '@angular/router';
     PanelModule,
     ReactiveFormsModule,
     InputTextModule,
-    FloatLabelModule,
+    IftaLabelModule,
     ButtonModule,
     PasswordModule,
     MessageModule,
     ToastModule,
+    FluidModule,
+    NgTemplateOutlet
   ],
   providers: [MessageService],
   templateUrl: './login-page.component.html',
@@ -37,13 +42,17 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
   loginForm = new FormGroup({
     email: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.email],
       nonNullable: true,
     }),
-    password: new FormControl('', { nonNullable: true }),
+    password: new FormControl('', {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
   });
+  isSubmitting = false;
 
-  private _api = inject(ApiService);
+  private _userService = inject(UserService);
   private _messages = inject(MessageService);
   private _router = inject(Router);
 
@@ -53,17 +62,26 @@ export class LoginPageComponent {
   }
 
   async onSubmit() {
-    this.loginForm.updateValueAndValidity();
+    this._markAllAsDirty();
+    if (this.loginForm.invalid) return;
+
     try {
-      await this._api.login(this.loginForm.getRawValue());
+      this.isSubmitting = true;
+      await this._userService.login(this.loginForm.getRawValue());
       await this._router.navigate(['users']);
     } catch (e) {
       this._messages.add({
         summary: 'Error',
         detail: 'Something went wrong',
-        life: 100_000,
         severity: 'error',
       });
+    } finally {
+        this.isSubmitting = false;
     }
+  }
+
+  private _markAllAsDirty() {
+    this.loginForm.controls.email.markAsDirty();
+    this.loginForm.controls.password.markAsDirty();
   }
 }

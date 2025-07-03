@@ -1,19 +1,38 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-    <p-panel header="Login">
-        <p-floatlabel variant="on">
-            <input pInputText id="email" type="email" autocomplete="off" formControlName="email" />
-            <label for="email">Email</label>
-        </p-floatlabel>
-        <p-message severity="error" size="small" variant="simple">
-            @if (isInvalid('email')) {
-                Email is Required.
+<div class="illustration">
+  <img src="./icons/login-illustration.svg" />
+</div>
+<div class="login-form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <p-fluid>
+      <h4>Sign in to your account</h4>
+      <p-iftalabel>
+        <input [required]="true" pInputText id="email" type="email" autocomplete="off" pSize="large" formControlName="email"/>
+        <label for="email">Email</label>
+        @if (isInvalid('email')) {
+            @if (loginForm.controls.email.errors?.['required']) {
+                <ng-template *ngTemplateOutlet="required"></ng-template>
+            } @else if (loginForm.controls.email.errors?.['email']) {
+                <p-message severity="error" variant="simple">This email address is invalid.</p-message>
             }
-        </p-message>
-        <p-floatlabel variant="on">
-            <input pInputText id="password" type="password" autocomplete="off" formControlName="password" />
-            <label for="password">Password</label>
-        </p-floatlabel>
-        <p-button label="Login" type="submit" size="small" [disabled]="loginForm.invalid"/>
-    </p-panel>
-</form>
-<p-toast position="bottom-right" />
+        }
+      </p-iftalabel>
+
+      <p-iftalabel>
+        <input pInputText id="password" type="password" autocomplete="off" pSize="large" formControlName="password"/>
+        <label for="password">Password</label>
+        @if (isInvalid('password')) {
+            @if (loginForm.controls.password.errors?.['required']) {
+                <ng-template *ngTemplateOutlet="required"></ng-template>
+            }
+        }
+      </p-iftalabel>
+      <p-button [loading]="isSubmitting" size="large" label="Sign in" fluid="true" type="submit"></p-button>
+    </p-fluid>
+  </form>
+</div>
+
+<ng-template #required let-msg="msg">
+    <p-message severity="error" variant="simple">This field is required</p-message>
+</ng-template>
+
+<p-toast position="bottom-right"></p-toast>
