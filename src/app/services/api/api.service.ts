@@ -32,6 +32,6 @@ export class ApiService {
     }
 
     healthCheck() {
-        this._api.get<void>(ApiService.HEALTH_CHECK);
+        return this._api.get<void>(ApiService.HEALTH_CHECK);
     }
 }

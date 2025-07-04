@@ -5,10 +5,11 @@ import { ToastModule } from 'primeng/toast';
 import { Store } from '@ngrx/store';
 import { authErrorSelector } from './state/auth/auth.selectors';
 import { MessageService } from 'primeng/api';
+import { HostingServiceWaitComponent } from "./components/hosting-service-wait/hosting-service-wait.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, ToastModule],
+  imports: [RouterOutlet, HeaderComponent, ToastModule, HostingServiceWaitComponent],
   providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
