@@ -19,6 +19,10 @@ export class ApiService {
         return this._api.get<T>(`${ApiService.USER}/me`);
     }
 
+    getAllUsers<T>() {
+        return this._api.get<T>(`${ApiService.USER}`)
+    }
+
     login<T>(data: { email: string; password: string }) {
         return this._api.post<T>(`${ApiService.AUTH}/login`, data);
     }

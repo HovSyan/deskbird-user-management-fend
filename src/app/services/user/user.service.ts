@@ -12,6 +12,10 @@ export class UserService {
         return this._api.getMe<User>();
     }
 
+    getAll() {
+        return this._api.getAllUsers<User[]>()
+    }
+
     login(credentials: Credentials) {
         return this._api.login<User>(credentials);
     }

@@ -16,6 +16,8 @@ import { provideStore } from '@ngrx/store';
 import { authReducer } from './state/auth/auth.reducers';
 import { AuthEffects } from './state/auth/auth.effects';
 import { ApiService } from './services/api';
+import { usersListReducer } from './state/users-list/users-list.reducers';
+import { UsersListEffects } from './state/users-list/users-list.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +34,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideAppInitializer(() => inject(ApiService).healthCheck()),
-    provideEffects([AuthEffects]),
-    provideStore({ auth: authReducer }),
+    provideEffects([AuthEffects, UsersListEffects]),
+    provideStore({ auth: authReducer, usersList: usersListReducer }),
   ],
 };
