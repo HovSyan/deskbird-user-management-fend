@@ -15,4 +15,8 @@ export class UserService {
     login(credentials: Credentials) {
         return this._api.login<User>(credentials);
     }
+
+    logout() {
+        return this._api.logout()
+    }
 }

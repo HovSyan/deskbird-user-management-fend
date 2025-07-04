@@ -3,7 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { ToastModule } from 'primeng/toast';
 import { Store } from '@ngrx/store';
-import { loginErrorSelector } from './state/auth/auth.selectors';
+import { authErrorSelector } from './state/auth/auth.selectors';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -19,9 +19,9 @@ export class AppComponent {
 
   ngOnInit() {
     this._store
-      .select(loginErrorSelector)
+      .select(authErrorSelector)
       .subscribe((e) =>
-        this._messageService.add({ severity: 'error', summary: e?.message })
+        this._messageService.add({ severity: 'error', summary: e?.summary, text: e?.message })
       );
   }
 }

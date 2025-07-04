@@ -18,7 +18,7 @@ import { FluidModule } from 'primeng/fluid';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { loginAction } from '../../state/auth/auth.actions';
-import { loginLoadingSelector } from '../../state/auth/auth.selectors';
+import { authLoadingSelector } from '../../state/auth/auth.selectors';
 
 @Component({
   selector: 'app-login-page',
@@ -55,7 +55,7 @@ export class LoginPageComponent {
       nonNullable: true,
     }),
   });
-  isSubmitting$ = this._store.select(loginLoadingSelector);
+  isSubmitting$ = this._store.select(authLoadingSelector);
 
   isInvalid(controlName: keyof typeof this.loginForm.controls) {
     const control = this.loginForm.get(controlName)!;

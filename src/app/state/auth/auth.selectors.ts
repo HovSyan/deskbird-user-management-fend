@@ -1,17 +1,18 @@
 import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 
-export const loginLoadingSelector = createSelector(
+export const authLoadingSelector = createSelector(
     ({ auth }: AppState) => auth,
     ({ loading }) => loading
 )
 
-export const loginErrorSelector = createSelector(
+export const authErrorSelector = createSelector(
     ({ auth }: AppState) => auth,
     ({ error }) => error,
 )
 
-export const currentUserSelector = createSelector(
+export const authUserSelector = createSelector(
     ({ auth }: AppState) => auth,
     ({ user }) => user
 )
+

@@ -6,6 +6,9 @@ import {
     loginAction,
     loginErrorAction,
     loginSuccessAction,
+    logoutAction,
+    logoutSuccessAction,
+    logoutErrorAction,
 } from './auth.actions';
 import { CustomError } from '../../utils/custom-error';
 
@@ -34,5 +37,8 @@ export const authReducer = createReducer(
         error,
         loading: false,
     })),
-    on(userLoadAction, (state, user) => ({ ...state, user }))
+    on(userLoadAction, (state, user) => ({ ...state, user })),
+    on(logoutAction, (state) => ({ ...state, loading: true })),
+    on(logoutSuccessAction, () => ({ user: null, loading: false, error: null})),
+    on(logoutErrorAction, (state, error) => ({ ...state, error }))
 );

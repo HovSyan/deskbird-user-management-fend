@@ -3,3 +3,42 @@
     flex-direction: column-reverse;
     padding: 20px;
 }
+
+p-avatar {
+    cursor: pointer;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    --p-button-label-font-weight: 400;
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__fullname {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    &__actions {
+        border-top: 1px solid rgba(0, 0, 0, 15%);
+        padding-top: 8px;
+
+        ::ng-deep {
+            .p-button {
+                padding-inline: 0.5rem;
+                justify-content: start;
+            }
+        }
+    }
+
+    &__email {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+}

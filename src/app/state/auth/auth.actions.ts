@@ -21,3 +21,16 @@ export const userLoadAction = createAction(
     '[API] user load',
     props<User>()
 );
+
+export const logoutAction = createAction(
+    '[User profile] logout',
+)
+
+export const logoutSuccessAction = createAction(
+    '[API] Logout Success'
+)
+
+export const logoutErrorAction = createAction(
+    '[API] Logout Failed',
+    props<CustomError>()
+)

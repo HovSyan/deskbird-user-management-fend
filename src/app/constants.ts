@@ -1,0 +1,2 @@
+export const LOGOUT_FAILED_ERROR_MSG = 'We are sorry, but it seems we failed to log you out! If it is essential to log out try deleting browser cookies by cleaning browser history'
+export const UNKNOWN_ERROR_MSG = 'We are so sorry! But an unknown error occurred :(';

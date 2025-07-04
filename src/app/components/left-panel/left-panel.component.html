@@ -1,3 +1,19 @@
 @if (avatarLabel$ | async; as label) {
-    <p-avatar [label]="label" class="mr-2" size="large" shape="circle"/>
+    <p-avatar (click)="op.toggle($event)" [label]="label" class="mr-2" size="large" shape="circle"/>
 }
+
+<p-popover #op>
+    <div class="profile">
+        @if (user$ | async; as user) {
+            <div class="profile__info">
+                <span class="profile__fullname">{{user.firstName}} {{user.lastName}}</span>
+                <span class="profile__email">{{user.email}}</span>
+            </div>
+        }
+        <div class="profile__actions">
+            <p-fluid>
+                <p-button (click)="onLogoutClick()" label="logout" severity="secondary" variant="text" />
+            </p-fluid>
+        </div>
+    </div>
+</p-popover>

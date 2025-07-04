@@ -23,6 +23,10 @@ export class ApiService {
         return this._api.post<T>(`${ApiService.AUTH}/login`, data);
     }
 
+    logout() {
+        return this._api.post(`${ApiService.AUTH}/logout`)
+    }
+
     healthCheck() {
         this._api.get<void>(ApiService.HEALTH_CHECK);
     }
