@@ -9,7 +9,8 @@
 
 .illustration {
   display: flex;
-  padding: 100px;
+  justify-self: start;
+  padding-block: 100px;
 }
 
 .login-form {
