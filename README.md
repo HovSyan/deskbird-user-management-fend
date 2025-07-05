@@ -33,7 +33,7 @@ A simple Angular application for user management, built as a part of a sample pr
 
 - 🚧 Virtual scroll support for large user lists
 - 📝 Self-registration flow for users
-- 🔐 Admin registration and user roles
+- 🔐 Admin registration
 
 ---
 
