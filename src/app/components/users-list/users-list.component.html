@@ -1,6 +1,7 @@
+@let isAdmin = isAdmin$ | async;
 <div class="header">
-    @if (isAdmin$ | async) {
-    <p-button label="Create a User" (onClick)="dialog = { user: null, mode: 'edit' }"/>
+    @if (isAdmin) {
+        <p-button label="Create a User" (onClick)="editDialog = { user: null }"/>
     }
 </div>
 <p-table
@@ -15,6 +16,9 @@
             <th>Last Name</th>
             <th>Created At</th>
             <th>Updated At</th>
+            @if (isAdmin) {
+                <th style="width: 1rem"></th>
+            }
         </tr>
     </ng-template>
     <ng-template #body let-user>
@@ -25,11 +29,27 @@
             <td>{{ user.lastName }}</td>
             <td>{{ user.createdAt | date : "MMM dd, HH:mm" }}</td>
             <td>{{ user.updatedAt | date : "MMM dd, HH:mm" }}</td>
+            @if (isAdmin) {
+                <td>
+                    <p-button variant="text" severity="secondary" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+                    <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body">
+                        <ng-template #item let-item>
+                            <div class="menu-item" (click)="item.onClick(user)">
+                                <i [class]="item.icon"></i>
+                                <span>{{ item.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-menu>
+                </td>
+            }
         </tr>
     </ng-template>
 </p-table>
 
-@if (dialog) {
-    <app-user-dialog [user]="dialog.user" [mode]="dialog.mode" (close)="dialog = null" />
+@if (editDialog) {
+    <app-user-dialog [user]="editDialog.user" (close)="editDialog = null" />
 }
 
+@if (deleteDialog) {
+    <app-user-delete-dialog [user]="deleteDialog" (close)="deleteDialog = null"/>
+}

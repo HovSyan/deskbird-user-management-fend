@@ -1,0 +1,21 @@
+@let deleting = deleting$ | async;
+
+<p-dialog
+    [visible]="true"
+    (visibleChange)="!$event && close.emit()"
+    [modal]="true"
+    [closable]="!deleting"
+    [style]="{ width: '50%' }"
+    header="Danger Zone"
+>
+    <div class="content">
+        <p-message severity="warn" variant="simple">
+            <i class="pi pi-exclamation-triangle"></i>
+        </p-message>
+        {{ MSG }}
+    </div>
+    <ng-template #footer>
+        <p-button label="Cancel" [text]="true" severity="secondary" (click)="close.emit()" [disabled]="deleting"/>
+        <p-button label="Delete" severity="danger" (click)="processDelete()" [loading]="deleting" />
+    </ng-template>
+</p-dialog>

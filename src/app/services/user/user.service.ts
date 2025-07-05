@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
-import { CreateNewUser, Credentials, User } from './types';
+import { CreateNewUser, Credentials, EditUser, User } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,14 @@ export class UserService {
 
     registerUser(u: CreateNewUser) {
         return this._api.register<void>(u)
+    }
+
+    editUser(id: User['id'], u: EditUser) {
+        return this._api.editUser<void>(id, u);
+    }
+
+    deleteUser(id: User['id']) {
+        return this._api.deleteUser<void>(id);
     }
 
     login(credentials: Credentials) {

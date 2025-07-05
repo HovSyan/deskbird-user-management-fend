@@ -26,21 +26,21 @@
         />
 
         @if (!user) {
-        <app-form-field
-            [required]="!user"
-            label="Password"
-            type="password"
-            id="Password"
-            [pTooltip]="PASSWORD_TOOLTIP"
-            tooltipPosition="right"
-            placeholder="Right"
-            [control]="userForm.controls.password"
-        />
+            <app-form-field
+                [required]="!user"
+                label="Password"
+                type="password"
+                id="Password"
+                [pTooltip]="PASSWORD_TOOLTIP"
+                tooltipPosition="right"
+                placeholder="Right"
+                [control]="userForm.controls.password"
+            />
         }
         <p-button
             [loading]="submitting$ | async"
             size="large"
-            label="Sign in"
+            label="Save"
             fluid="true"
             type="submit"
         ></p-button>

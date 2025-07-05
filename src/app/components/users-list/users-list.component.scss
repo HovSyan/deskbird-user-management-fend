@@ -3,3 +3,11 @@
     flex-direction: row-reverse;
     margin-bottom: 20px;
 }
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+}

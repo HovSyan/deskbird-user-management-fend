@@ -20,9 +20,6 @@ export class LeftPanelComponent {
     private _store = inject(Store);
 
     user$ = this._store.select(authUserSelector);
-    avatarLabel$ = this.user$.pipe(
-        map((u) => u?.firstName.charAt(0).toUpperCase())
-    );
 
     onLogoutClick() {
         this._store.dispatch(logoutAction())

@@ -22,7 +22,7 @@ import { markAllAsDirty } from '../../utils/reactive-form-utils';
 import { PASSWORD_REGEX, PASSWORD_TOOLTIP } from '../../constants';
 import { Store } from '@ngrx/store';
 import { userEditSavingSelector } from '../../state/user-edit/user-edit.selectors';
-import { createUserAction } from '../../state/user-edit/user-edit.actions';
+import { createUserAction, editUserAction } from '../../state/user-edit/user-edit.actions';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -41,7 +41,6 @@ import { CommonModule } from '@angular/common';
 })
 export class UserDialogComponent implements OnChanges {
     @Input({ required: true }) user!: User | null;
-    @Input() mode = 'view' as 'view' | 'edit';
 
     @Output() close = new EventEmitter<void>();
 
@@ -78,26 +77,23 @@ export class UserDialogComponent implements OnChanges {
     submitting$ = this._store.select(userEditSavingSelector);
 
     ngOnChanges(): void {
-        if (!this.user && this.mode === 'view') {
-            throw new Error('Are you going to view a user that is null ?!');
-        }
-
         this.userForm.reset({
             email: this.user?.email,
             firstName: this.user?.firstName,
             lastName: this.user?.lastName,
             password: '',
         });
-        if (!this.user) {
-            this.header = 'Create a User';
-        } else {
-            this.header = this.mode === 'edit' ? 'Edit a User' : 'User info';
-        }
+        this.header = this.user ? 'Edit a User' : 'Create a User';
     }
 
     onSubmit() {
         markAllAsDirty(this.userForm);
         if (this.userForm.invalid) return;
-        this._store.dispatch(createUserAction(this.userForm.getRawValue()));
+        const raw = this.userForm.getRawValue();
+        if (this.user) {
+            this._store.dispatch(editUserAction({ ...raw, id: this.user.id }))
+        } else {
+            this._store.dispatch(createUserAction(raw));
+        }
     }
 }

@@ -6,3 +6,8 @@ export const userEditSavingSelector = createSelector(
     ({ userEdit }: AppState) => userEdit,
     ({ saving }: UserEditState) => saving
 );
+
+export const userDeletingSelector = createSelector(
+    ({ userEdit }: AppState) => userEdit,
+    ({ deleting }: UserEditState) => deleting
+);

@@ -16,6 +16,9 @@ export type User = {
   updatedAt: string;
 };
 
-export type CreateNewUser = Pick<User, 'email' | 'firstName' | 'lastName'> & {
+export type EditUser = Pick<User, 'email' | 'firstName' | 'lastName'>;
+
+export type CreateNewUser = EditUser & {
     password: string;
 }
+

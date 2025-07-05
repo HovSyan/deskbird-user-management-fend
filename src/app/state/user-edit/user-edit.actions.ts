@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { CreateNewUser } from "../../services/user"
+import { CreateNewUser, EditUser, User } from "../../services/user"
 import { CustomError } from "../../utils/custom-error"
 
 export const createUserAction = createAction(
@@ -9,7 +9,12 @@ export const createUserAction = createAction(
 
 export const editUserAction = createAction(
     '[Users List] Edit A User',
-    props<Omit<CreateNewUser, 'password'>>()
+    props<EditUser & Pick<User, 'id'>>()
+)
+
+export const deleteUserAction = createAction(
+    '[Users List] Delete A User',
+    props<User>()
 )
 
 export const editUserSuccess = createAction(
