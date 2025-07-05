@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import env from '../../../env';
+import { CreateNewUser, Credentials } from '../user';
 
 @Injectable({
     providedIn: 'root',
@@ -20,10 +21,14 @@ export class ApiService {
     }
 
     getAllUsers<T>() {
-        return this._api.get<T>(`${ApiService.USER}`)
+        return this._api.get<T>(`${ApiService.USER}`);
     }
 
-    login<T>(data: { email: string; password: string }) {
+    register<T>(data: CreateNewUser) {
+        return this._api.post<T>(`${ApiService.AUTH}/register`, data);
+    }
+
+    login<T>(data: Credentials) {
         return this._api.post<T>(`${ApiService.AUTH}/login`, data);
     }
 

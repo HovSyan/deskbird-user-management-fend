@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { CustomError } from "../../utils/custom-error";
-import { User } from "../../services/user";
+import { User, CreateNewUser } from "../../services/user";
 
 export const loadUsersAction = createAction(
     '[Users List Page] Load Users'

@@ -1,0 +1,48 @@
+<p-dialog
+    [visible]="true"
+    (visibleChange)="!$event && close.emit()"
+    [modal]="true"
+    [style]="{ width: '50%' }"
+    [header]="header"
+>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <app-form-field
+            [required]="true"
+            label="First Name"
+            id="firstName"
+            [control]="userForm.controls.firstName"
+        />
+        <app-form-field
+            [required]="true"
+            label="Last Name"
+            id="lastName"
+            [control]="userForm.controls.lastName"
+        />
+        <app-form-field
+            [required]="true"
+            label="Email"
+            id="email"
+            [control]="userForm.controls.email"
+        />
+
+        @if (!user) {
+        <app-form-field
+            [required]="!user"
+            label="Password"
+            type="password"
+            id="Password"
+            [pTooltip]="PASSWORD_TOOLTIP"
+            tooltipPosition="right"
+            placeholder="Right"
+            [control]="userForm.controls.password"
+        />
+        }
+        <p-button
+            [loading]="submitting$ | async"
+            size="large"
+            label="Sign in"
+            fluid="true"
+            type="submit"
+        ></p-button>
+    </form>
+</p-dialog>

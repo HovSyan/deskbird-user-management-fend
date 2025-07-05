@@ -15,6 +15,9 @@ import { authReducer } from './state/auth/auth.reducers';
 import { AuthEffects } from './state/auth/auth.effects';
 import { usersListReducer } from './state/users-list/users-list.reducers';
 import { UsersListEffects } from './state/users-list/users-list.effects';
+import { UserEditEffects } from './state/user-edit/user-edit.effects';
+import { userEditReducer } from './state/user-edit/user-edit.reducers';
+import { NotificationEffects } from './state/notification/notification.effects';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -30,7 +33,11 @@ export const appConfig: ApplicationConfig = {
                 preset: Aura,
             },
         }),
-        provideEffects([AuthEffects, UsersListEffects]),
-        provideStore({ auth: authReducer, usersList: usersListReducer }),
+        provideEffects([AuthEffects, UsersListEffects, UserEditEffects, NotificationEffects]),
+        provideStore({
+            auth: authReducer,
+            usersList: usersListReducer,
+            userEdit: userEditReducer,
+        }),
     ],
 };

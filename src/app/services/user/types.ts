@@ -8,7 +8,14 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
-  role: string;
+  role: {
+    id: number;
+    name: string;
+  };
   createdAt: string;
   updatedAt: string;
 };
+
+export type CreateNewUser = Pick<User, 'email' | 'firstName' | 'lastName'> & {
+    password: string;
+}

@@ -1,4 +1,12 @@
-<p-table [value]="(user$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }">
+<div class="header">
+    @if (isAdmin$ | async) {
+    <p-button label="Create a User" (onClick)="dialog = { user: null, mode: 'edit' }"/>
+    }
+</div>
+<p-table
+    [value]="(user$ | async) || []"
+    [tableStyle]="{ 'min-width': '50rem' }"
+>
     <ng-template #header>
         <tr>
             <th>Email</th>
@@ -12,11 +20,16 @@
     <ng-template #body let-user>
         <tr>
             <td>{{ user.email }}</td>
-            <td>{{ user.role.id === 1 ? '✔️' : '' }}</td>
+            <td>{{ user.role.id === 1 ? "✔️" : "" }}</td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
-            <td>{{ user.createdAt | date : 'MMM dd, HH:mm' }}</td>
-            <td>{{ user.updatedAt | date : 'MMM dd, HH:mm' }}</td>
+            <td>{{ user.createdAt | date : "MMM dd, HH:mm" }}</td>
+            <td>{{ user.updatedAt | date : "MMM dd, HH:mm" }}</td>
         </tr>
     </ng-template>
 </p-table>
+
+@if (dialog) {
+    <app-user-dialog [user]="dialog.user" [mode]="dialog.mode" (close)="dialog = null" />
+}
+

@@ -1,0 +1,28 @@
+<p-iftalabel>
+    <p-fluid>
+        <input
+            [required]="!!required"
+            pInputText
+            [id]="id"
+            [type]="type"
+            autocomplete="off"
+            pSize="large"
+            [formControl]="control"
+        />
+    </p-fluid>
+    <label [for]="id">{{ label }}</label>
+    @if (control.invalid && control.dirty && control.touched) {
+        <p-message severity="error" variant="simple">
+            @if (control.errors?.['required']) {
+                <span>This field is required</span>
+            } @else if (control.errors?.['email']) {
+                <span>This email address is invalid.</span>
+            } @else if (control.errors?.['pattern']) {
+                <span 
+                    >Password must contain minimum 8, at least one uppercase letter, one
+                    lowercase letter, one number and one special character </span
+                >
+            }
+        </p-message>
+    }
+</p-iftalabel>

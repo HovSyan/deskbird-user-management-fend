@@ -6,11 +6,6 @@ export const authLoadingSelector = createSelector(
     ({ loading }) => loading
 )
 
-export const authErrorSelector = createSelector(
-    ({ auth }: AppState) => auth,
-    ({ error }) => error,
-)
-
 export const authUserSelector = createSelector(
     ({ auth }: AppState) => auth,
     ({ user }) => user
