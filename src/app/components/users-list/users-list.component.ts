@@ -41,6 +41,9 @@ import { InputText } from 'primeng/inputtext';
 export class UsersListComponent {
     private _store = inject(Store);
 
+    /**
+     * IDK, maybe it's better to move it to the global state
+     */
     searchTerm$ = new BehaviorSubject('');
     users$ = combineLatest([
         this._store.select(usersListSelector),
