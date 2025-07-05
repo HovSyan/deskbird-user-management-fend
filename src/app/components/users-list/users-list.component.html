@@ -29,9 +29,9 @@
             <td>{{ user.lastName }}</td>
             <td>{{ user.createdAt | date : "MMM dd, HH:mm" }}</td>
             <td>{{ user.updatedAt | date : "MMM dd, HH:mm" }}</td>
-            @if (isAdmin) {
+            @if (isAdmin && user.role.id) {
                 <td>
-                    <p-button variant="text" severity="secondary" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+                    <p-button variant="text" severity="secondary" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" [disabled]="user.role.id === 1"/>
                     <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body">
                         <ng-template #item let-item>
                             <div class="menu-item" (click)="item.onClick(user)">
