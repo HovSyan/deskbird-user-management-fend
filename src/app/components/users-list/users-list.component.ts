@@ -1,9 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
@@ -48,7 +43,12 @@ export class UsersListComponent {
     users$ = combineLatest([
         this._store.select(usersListSelector),
         this.searchTerm$.pipe(map((t) => t.toLowerCase())),
-    ]).pipe(map(([{ list }, searchTerm]) => list!.filter((u) => filterUser(u, searchTerm))));
+    ]).pipe(
+        map(
+            ([{ list }, searchTerm]) =>
+                list?.filter((u) => filterUser(u, searchTerm)) || []
+        )
+    );
     isAdmin$ = this._store
         .select(authUserSelector)
         .pipe(map((u) => u?.role.id === UserRoles.ADMIN));
@@ -70,5 +70,7 @@ export class UsersListComponent {
 }
 
 function filterUser(u: User, term: string) {
-    return Object.values((u)).some((v) => typeof v === 'string' && v.toLowerCase().includes(term));
+    return Object.values(u).some(
+        (v) => typeof v === 'string' && v.toLowerCase().includes(term)
+    );
 }
